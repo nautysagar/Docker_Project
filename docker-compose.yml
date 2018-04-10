@@ -1,0 +1,26 @@
+version: "2"
+services:
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "8080:15672"
+    networks:
+      - my_redis_app
+  producer:
+    image: producer:latest
+    ports:
+      - "7895:7895"
+    networks:
+      - my_redis_app
+    
+  consumer:
+    image: consumer:latest
+    ports:
+      - "7896:7896"
+    networks:
+      - my_redis_app
+networks:
+  my_redis_app:
+    driver: bridge
+     

@@ -1,0 +1,27 @@
+version: "2"
+services:
+  rabbitmq:
+    image: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  producer:
+    build: AsyncAddressPublisher/
+    links:
+      - rabbitmq:rabbitmqalias
+    ports:
+      - "7895:7895"
+    environment:
+      RABBIT_MQ_HOST: rabbitmqalias
+    
+  consumer:
+    build: AsyncAddressListner/
+    links:
+      - rabbitmq:rabbitmqalias
+    ports:
+      - "7896:7896"
+    environment:
+      RABBIT_MQ_HOST: rabbitmqalias
+     
+
